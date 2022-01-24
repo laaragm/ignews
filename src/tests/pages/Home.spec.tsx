@@ -1,5 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import { mocked } from "jest-mock";
+
 import { stripe } from "../../services/stripe";
 import Home, { getStaticProps } from "../../pages";
 
@@ -22,10 +23,12 @@ describe("Home page", () => {
 
     it("should load initial data correctly", async () => {
         const retrieveStripePriceMocked = mocked(stripe.prices.retrieve);
+
         retrieveStripePriceMocked.mockResolvedValueOnce({
             id: "fake-price-id",
             unit_amount: 1000,
         } as any);
+
         const response = await getStaticProps({});
 
         expect(response).toEqual(

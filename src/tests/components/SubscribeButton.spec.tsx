@@ -2,6 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { signIn, useSession } from "next-auth/react";
 import { mocked } from "jest-mock";
 import { useRouter } from "next/router";
+
 import { SubscribeButton } from "../../components/SubscribeButton";
 
 jest.mock("next-auth/react");
@@ -19,8 +20,11 @@ describe("SubscribeButton component", () => {
     it("should redirect user to sign in when not authenticated", () => {
         const signInMocked = mocked(signIn);
         const useSessionMocked = mocked(useSession);
+
         useSessionMocked.mockReturnValueOnce([null, false]);
+
         render(<SubscribeButton />);
+
         const subscribeButton = screen.getByText("Subscribe now");
         fireEvent.click(subscribeButton);
 
@@ -31,6 +35,7 @@ describe("SubscribeButton component", () => {
         const useRouterMocked = mocked(useRouter);
         const useSessionMocked = mocked(useSession);
         const pushMock = jest.fn();
+
         useSessionMocked.mockReturnValueOnce({
             data: {
                 user: {
@@ -45,7 +50,9 @@ describe("SubscribeButton component", () => {
         useRouterMocked.mockReturnValueOnce({
             push: pushMock,
         } as any);
+
         render(<SubscribeButton />);
+
         const subscribeButton = screen.getByText("Subscribe now");
         fireEvent.click(subscribeButton);
 
