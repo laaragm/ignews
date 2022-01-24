@@ -2,7 +2,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { signIn, useSession } from "next-auth/react";
 import { mocked } from "jest-mock";
 import { useRouter } from "next/router";
-import { SubscribeButton } from ".";
+import { SubscribeButton } from "../../components/SubscribeButton";
 
 jest.mock("next-auth/react");
 jest.mock("next/router");
@@ -49,6 +49,6 @@ describe("SubscribeButton component", () => {
         const subscribeButton = screen.getByText("Subscribe now");
         fireEvent.click(subscribeButton);
 
-        expect(pushMock).toHaveBeenCalled();
+        expect(pushMock).toHaveBeenCalledWith("/posts");
     });
 });

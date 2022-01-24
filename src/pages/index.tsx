@@ -9,13 +9,9 @@ import styles from "../styles/home.module.scss";
 interface HomeProps {
     product: {
         priceId: string;
-        amount: number;
+        amount: string;
     };
 }
-
-// Client side
-// Server side
-// Static Site Generation
 
 export default function Home({ product }: HomeProps) {
     return (
@@ -41,29 +37,6 @@ export default function Home({ product }: HomeProps) {
     );
 }
 
-// Next.js will pre-render this page on each request using the data returned by getServerSideProps
-// export const getServerSideProps: GetServerSideProps = async () => {
-//     const price = await stripe.prices.retrieve(
-//         "price_1KC4BLEsxU4kmnwAGaXVngno",
-//         {
-//             expand: ["product"],
-//         }
-//     );
-//     const product = {
-//         priceId: price.id,
-//         amount: new Intl.NumberFormat("en-US", {
-//             style: "currency",
-//             currency: "USD",
-//         }).format(price.unit_amount / 100),
-//     };
-
-//     return {
-//         props: {
-//             product,
-//         },
-//     };
-// };
-
 // Next.js will pre-render this page at build time using the props returned by getStaticProps.
 export const getStaticProps: GetStaticProps = async () => {
     const price = await stripe.prices.retrieve(
@@ -72,12 +45,13 @@ export const getStaticProps: GetStaticProps = async () => {
             expand: ["product"],
         }
     );
+    console.log(price);
     const product = {
         priceId: price.id,
         amount: new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
-        }).format(price.unit_amount / 100),
+        }).format(+price.unit_amount / 100),
     };
 
     return {
