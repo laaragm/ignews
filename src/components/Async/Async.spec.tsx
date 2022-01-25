@@ -6,7 +6,7 @@ import {
     waitForElementToBeRemoved,
 } from "@testing-library/react";
 
-import { Async } from "../../components/Async";
+import { Async } from ".";
 
 describe("Async component", () => {
     it("should render correctly", async () => {
